@@ -11,6 +11,7 @@ body {
   background: #fff;
   height: 100vh;
 }
+
 .container {
   display: flex;
   flex-direction: column;
@@ -48,9 +49,9 @@ body {
 }
 
 .input-submit {
-   color: rgb(1, 180, 16);
-   font-Size: 20px;
-    margin-Top: 2px;
+  color: rgb(1, 180, 16);
+  font-size: 20px;
+  margin-top: 2px;
 }
 
 .input-text,
@@ -104,11 +105,6 @@ a {
   margin-top: 7rem;
 }
 
-.navBar button {
-  background: transparent;
-  border: none;
-}
-
 .about__content {
   padding: 8rem 40px;
   display: flex;
@@ -140,10 +136,12 @@ a {
   line-height: 30px;
   font-size: 30px;
 }
+
 .active-link {
   color: orangered;
   text-decoration: underline;
 }
+
 .main__content p {
   line-height: 25px;
 }
