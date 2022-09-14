@@ -1,42 +1,50 @@
-import React, { useState } from "react"
+import React, { useState } from 'react';
+import { FaPlusCircle } from 'react-icons/fa';
+import PropTypes from 'prop-types';
 
-const InputTodo = props => {
+const InputTodo = (props) => {
+  const { addTodoProps } = props;
   const [inputText, setInputText] = useState({
-    title: "",
-  })
+    title: '',
+  });
 
-  const onChange = e => {
+  const onChange = (e) => {
     setInputText({
       ...inputText,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
-  const handleSubmit = e => {
-    e.preventDefault()
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (inputText.title.trim()) {
-      props.addTodoProps(inputText.title)
+      addTodoProps(inputText.title);
       setInputText({
-        title: "",
-      })
-    } else {
-      alert("Please write item")
+        title: '',
+      });
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="form-container">
       <input
         type="text"
-        className="input-text"
-        placeholder="Add todo..."
+        placeholder="Add Todo..."
         value={inputText.title}
         name="title"
+        className="input-text"
         onChange={onChange}
+        required
       />
-      <button className="input-submit">Submit</button>
+      <button type="button" className="input-submit">
+        <FaPlusCircle />
+      </button>
     </form>
-  )
-}
+  );
+};
 
-export default InputTodo
+InputTodo.propTypes = {
+  addTodoProps: PropTypes.func.isRequired,
+};
+
+export default InputTodo;

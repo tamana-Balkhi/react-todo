@@ -1,41 +1,47 @@
-import React, { useState, useEffect } from "react"
-import styles from "./TodoItem.module.css"
+import React, { useState } from 'react';
+import { FaTrash } from 'react-icons/fa';
+import PropTypes from 'prop-types';
 
-const TodoItem = props => {
-  const [editing, setEditing] = useState(false)
+// css styles module
+import styles from './TodoItem.module.css';
+
+const TodoItem = (props) => {
+  const {
+    todo,
+    setUpdate,
+    deleteTodoProps,
+    handleChangeProps,
+  } = props;
+  const {
+    completed,
+    id,
+    title,
+  } = todo;
+
+  const [editing, setEditing] = useState(false);
 
   const handleEditing = () => {
-    setEditing(true)
-  }
+    setEditing(true);
+  };
 
-  const handleUpdatedDone = event => {
-    if (event.key === "Enter") {
-      setEditing(false)
+  const handleUpdatedDone = (event) => {
+    if (event.key === 'Enter') {
+      setEditing(false);
     }
-  }
+  };
 
   const completedStyle = {
-    fontStyle: "italic",
-    color: "#595959",
+    fontStyle: 'italic',
+    color: '#595959',
     opacity: 0.4,
-    textDecoration: "line-through",
-  }
+    textDecoration: 'line-through',
+  };
 
-  const { completed, id, title } = props.todo
+  const viewMode = {};
+  const editMode = {};
 
-  let viewMode = {}
-  let editMode = {}
-
-  if (editing) {
-    viewMode.display = "none"
-  } else {
-    editMode.display = "none"
-  }
-  useEffect(() => {
-    return () => {
-      console.log("Cleaning up...")
-    }
-  }, [])
+  if (editing) viewMode.display = 'none';
+  else editMode.display = 'none';
 
   return (
     <li className={styles.item}>
@@ -44,23 +50,38 @@ const TodoItem = props => {
           type="checkbox"
           className={styles.checkbox}
           checked={completed}
-          onChange={() => props.handleChangeProps(id)}
+          onChange={() => handleChangeProps(id)}
         />
-        <button onClick={() => props.deleteTodoProps(id)}>Delete</button>
-        <span style={completed ? completedStyle : null}>{title}</span>
+        <button type="button" onClick={() => deleteTodoProps(id)}>
+          <FaTrash style={{ color: 'orangered', fontSize: '16px' }} />
+        </button>
+        <span style={completed ? completedStyle : null}>
+          {title}
+        </span>
       </div>
       <input
         type="text"
         style={editMode}
-        className={styles.textInput}
         value={title}
-        onChange={e => {
-          props.setUpdate(e.target.value, id)
+        className={styles.textInput}
+        onChange={(e) => {
+          setUpdate(e.target.value, id);
         }}
         onKeyDown={handleUpdatedDone}
       />
     </li>
-  )
-}
+  );
+};
 
-export default TodoItem
+TodoItem.propTypes = {
+  todo: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+    title: PropTypes.string.isRequired,
+  }).isRequired,
+  setUpdate: PropTypes.func.isRequired,
+  handleChangeProps: PropTypes.func.isRequired,
+  deleteTodoProps: PropTypes.func.isRequired,
+};
+
+export default TodoItem;
